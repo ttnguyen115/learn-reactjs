@@ -1,6 +1,4 @@
 import React from 'react';
-// import './App.css';
-import TodoFeature from './features/Todo/index';
 import AlbumFeature from './features/Album';
 
 function App() {
