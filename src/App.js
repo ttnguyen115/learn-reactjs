@@ -8,6 +8,7 @@ import TodoFeature from './features/Todo';
 import NotFound from './features/Todo/components/NotFound';
 
 function App() {
+  
   useEffect(() => {
     const fetchProducts = async () => {
       const params = {
@@ -25,7 +26,8 @@ function App() {
   return (
     <div className="App">
         <Header />
-
+        Header
+        
         <Switch>
           <Route path="/" component={ CounterFeature } exact/>
           <Route path="/todos" component={ TodoFeature } />

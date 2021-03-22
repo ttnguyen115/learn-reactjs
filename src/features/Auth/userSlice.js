@@ -1,7 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import userApi from '../../api/userApi';
 
-export const register = createAsyncThunk('user/register',async (payload) => {
+export const register = createAsyncThunk('user/register', async (payload) => {
     // call API to register
     const data = await userApi.register(payload);
 
@@ -24,9 +24,9 @@ const userSlice = createSlice({
     extraReducers: {
         [register.fulfilled]: (state, action) => {
             state.current = action.payload;
-        }
+        },
     },
 });
 
-const {reducer } = userSlice;
+const {reducer} = userSlice;
 export default reducer;
