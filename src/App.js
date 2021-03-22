@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
-import { NavLink, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import productApi from './api/productApi';
+import Header from './components/Header';
 import AlbumFeature from './features/Album';
+import CounterFeature from './features/Counter';
 import TodoFeature from './features/Todo';
 import NotFound from './features/Todo/components/NotFound';
-import productApi from './api/productApi'
 
 function App() {
   useEffect(() => {
@@ -22,18 +24,13 @@ function App() {
 
   return (
     <div className="App">
-        Header
-        
-        <div>
-          <NavLink to="/">Home</NavLink><br/>
-          <NavLink to="/todos">Todos</NavLink><br/>
-          <NavLink to="/albums">Albums</NavLink><br/>
-        </div>
+        <Header />
 
         <Switch>
+          <Route path="/" component={ CounterFeature } exact/>
           <Route path="/todos" component={ TodoFeature } />
           <Route path="/albums" component={ AlbumFeature } />
-          <Route component={ NotFound } />
+          <Route component={ NotFound } exact/>
         </Switch>
 
         Footer
