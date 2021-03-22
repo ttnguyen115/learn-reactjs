@@ -6,6 +6,12 @@ const userApi = {
         return axiosClient.post(url, data);
     },
 
+    login(data) {
+        const url = '/auth/local';
+        return axiosClient.post(url, data);
+    },
+
+    
 }
 
 export default userApi;
