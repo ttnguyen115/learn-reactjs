@@ -86,9 +86,9 @@ export default function Header() {
             <Link className={classes.link} to='/'>iFlix</Link>
           </Typography>
 
-          {/* <NavLink color="inherit" to="/"><Button color="inherit">Home</Button></NavLink> */}
           <NavLink className={classes.link} color="inherit" to="/todos"><Button color="inherit">Todos</Button></NavLink>
           <NavLink className={classes.link} color="inherit" to="/albums"><Button color="inherit">Albums</Button></NavLink>
+          <NavLink className={classes.link} color="inherit" to="/products"><Button color="inherit">Products</Button></NavLink>
 
           {!isLoggedIn && (<Button color="inherit" onClick={handleClickOpen}>Login</Button>)}
           {isLoggedIn && (<IconButton color="inherit" onClick={handleUserClick}><AccountCircle  /></IconButton>)}

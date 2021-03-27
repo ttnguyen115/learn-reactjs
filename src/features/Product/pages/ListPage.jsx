@@ -5,6 +5,10 @@ import ProductList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import { Pagination } from '@material-ui/lab';
 import ProductSort from '../components/ProductSort';
+import ProductFilters from '../components/ProductFilters';
+import FilterViewer from '../components/Filters/FilterViewer';
+import { useHistory, useLocation } from 'react-router-dom';
+import queryString from 'query-string'; 
 
 ListPage.propTypes = {};
 
@@ -33,6 +37,9 @@ const useStyles = makeStyles(theme => ({
 
 function ListPage(props) {
     const classes = useStyles(); 
+    const history = useHistory();
+    const location = useLocation();
+    const queryParams = queryString.parse(location.search);
     const [productList, setProductList] = useState([]);
     const [pagination, setPagination] = useState({
         limit: 9,
@@ -45,6 +52,21 @@ function ListPage(props) {
         _limit: 9,
         _sort: "salePrice:ASC", 
     });
+    
+    // const [filters, setFilters] = useState(() => ({
+    //     ...queryParams,
+    //     _page: Number.parseInt(queryParams._page) || 1,
+    //     _limit: Number.parseInt(queryParams._limit) || 9,
+    //     _sort: queryParams._sort || "salePrice:ASC", 
+    // }));
+
+    useEffect(() => {
+        // TODO: Sync filters to URL
+        history.push({
+            pathname: history.location.pathname,
+            search: queryString.stringify(filters),
+        });
+    }, [history, filters]);
 
     useEffect(() => {
         (async () => {
@@ -75,19 +97,33 @@ function ListPage(props) {
             _sort: newSortValue,
         }))
     };
+    
+    const handleFilterChange = (newFilters) => {
+        setFilters((prevFilters) => ({
+            ...prevFilters,
+            ...newFilters, 
+        }))
+    };
+    
+    const setNewFilters = (newFilters) => {
+        setFilters(newFilters);
+    };
 
     return (
         <Box> 
             <Container>
                 <Grid container spacing={1} >
                     <Grid item className={classes.left} >
-                        <Paper elevation={0} >Left column</Paper>
+                        <Paper elevation={0} >
+                            <ProductFilters filters={filters} onChange={handleFilterChange} />
+                        </Paper>
                     </Grid>
                     
                     <Grid item className={classes.right} >
                         <Paper elevation={0} >
                             <ProductSort currentSort={filters._sort} onChange={handleSortChange} />
-                            
+                            <FilterViewer filters={filters} onChange={setNewFilters} />
+
                             {loading ? <ProductSkeletonList /> : <ProductList data={productList} />}
 
                             <Box className={classes.pagination} >
