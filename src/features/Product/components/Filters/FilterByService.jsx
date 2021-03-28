@@ -1,5 +1,4 @@
-import { Box, FormControlLabel, makeStyles, Typography } from '@material-ui/core';
-import { CheckBox } from '@material-ui/icons';
+import { Box, FormControlLabel, makeStyles, Typography, Checkbox } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -42,12 +41,12 @@ function FilterByService({filters = {}, onChange}) {
             <ul className={classes.list}>
                 {[
                     {value: 'isPromotion', label: 'Promotion'}, 
-                    {value: 'isFreeShip', label: 'Free Ship'},
+                    {value: 'isFreeShip', label: 'Free Ship'}
                 ].map((service) => (
                     <li key={service.value}>
                         <FormControlLabel 
                             control={
-                                <CheckBox 
+                                <Checkbox 
                                     checked={Boolean(filters[service.value])}
                                     onChange={handleChange}
                                     name={service.value}
@@ -59,7 +58,6 @@ function FilterByService({filters = {}, onChange}) {
                     </li>
                 ))}
             </ul>
-             
         </Box>
     );
 }
