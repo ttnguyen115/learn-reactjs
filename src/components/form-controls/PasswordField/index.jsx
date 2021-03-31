@@ -30,19 +30,27 @@ function PasswordField(props) {
                 <Controller
                     name={name} 
                     control={form.control} 
-                    as={OutlinedInput} 
 
-                    id={name}
-                    type={showPassword ? 'text' : 'password'}
-                    label={label}
-                    endAdornment={
-                        <InputAdornment position="end">
-                            <IconButton aria-label="toggle password visibility" onClick={toggleShowPassword}> 
-                                {showPassword ? <Visibility /> : <VisibilityOff />}
-                            </IconButton>
-                        </InputAdornment>
-                    }
-                    disabled={disabled} 
+                    render={({ onChange, onBlur, name, value }) => (
+                        <OutlinedInput 
+                            id={name}
+                            type={showPassword ? 'text' : 'password'}
+                            label={label}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton aria-label="toggle password visibility" onClick={toggleShowPassword}> 
+                                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                            disabled={disabled}
+
+                            onChange={onChange}
+                            onBlur={onBlur}
+                            name={name}
+                            value={value}
+                        />
+                    )}
                 />
 
                 <FormHelperText error={!!hasError} >{errors[name]?.message}</FormHelperText>
