@@ -1,4 +1,4 @@
-import { Box, IconButton, Menu, MenuItem } from '@material-ui/core';
+import { Box, IconButton, Menu, MenuItem, Badge } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -6,14 +6,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { AccountCircle, Close } from '@material-ui/icons';
-import MovieFilterIcon from '@material-ui/icons/MovieFilter';
+import { AccountCircle, Close, ShoppingCart } from '@material-ui/icons';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useHistory } from 'react-router-dom';
 import Login from '../../features/Auth/components/Login';
 import Register from '../../features/Auth/components/Register';
 import { logout } from '../../features/Auth/userSlice';
+import { cartItemsCountSelector } from '../../features/Cart/selectors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,11 +51,13 @@ const MODE = {
 export default function Header() {
   const loggedInUser = useSelector(state => state.user.current);
   const isLoggedIn = !!loggedInUser.id;
+  const history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState(MODE.LOGIN);
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
+  const cartItemsCount = useSelector(cartItemsCountSelector);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,19 +74,23 @@ export default function Header() {
   const handleCloseMenu = () => {
     setAnchorEl(null);
   };
-
+  
   const handleLogoutClick = () => {
     const action = logout();
     dispatch(action);
+  };
+  
+  const handleCartClick = () => {
+    history.push('/cart');
   };
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <MovieFilterIcon className={classes.menuButton} />
+          <LocalMallIcon className={classes.menuButton} />
           <Typography variant="h6" className={classes.title}>
-            <Link className={classes.link} to='/'>iFlix</Link>
+            <Link className={classes.link} to='/'>iShop</Link>
           </Typography>
 
           <NavLink className={classes.link} color="inherit" to="/todos"><Button color="inherit">Todos</Button></NavLink>
@@ -91,6 +98,13 @@ export default function Header() {
           <NavLink className={classes.link} color="inherit" to="/products"><Button color="inherit">Products</Button></NavLink>
 
           {!isLoggedIn && (<Button color="inherit" onClick={handleClickOpen}>Login</Button>)}
+
+          <IconButton aria-label="cart" color="inherit" onClick={handleCartClick}>
+            <Badge badgeContent={cartItemsCount} color="secondary">
+              <ShoppingCart />
+            </Badge>
+          </IconButton>
+
           {isLoggedIn && (<IconButton color="inherit" onClick={handleUserClick}><AccountCircle  /></IconButton>)}
           
         </Toolbar>
