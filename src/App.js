@@ -2,11 +2,11 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 import AlbumFeature from './features/Album';
+import CartFeature from './features/Cart';
 import CounterFeature from './features/Counter';
 import ProductFeature from './features/Product';
 import TodoFeature from './features/Todo';
 import NotFound from './features/Todo/components/NotFound';
-import CartFeature from './features/Cart';
 
 function App() {
 

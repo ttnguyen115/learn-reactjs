@@ -41,8 +41,8 @@ const userSlice = createSlice({
             // reset current
             state.current = {};
         }
-
     },
+    
     extraReducers: {
         [register.fulfilled]: (state, action) => {
             state.current = action.payload;
@@ -54,6 +54,6 @@ const userSlice = createSlice({
     },
 });
 
-const { actions, reducer } = userSlice;
+const { actions,reducer } = userSlice;
 export const { logout } = actions;
 export default reducer;
